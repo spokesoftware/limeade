@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['david.pellegrini@spokesoftware.com']
 
   spec.summary       = %q{A Ruby interface to the LimeSurvey API.}
-  spec.description   = %q{LimeSurvey exposes an RPC API for querying and managing surveys. This gem abstracts away the RPC calls and provides a friendly interface for Ruby clients.}
+  spec.description   = %q{LimeSurvey exposes a JSON-RPC API for querying and managing surveys. This gem abstracts away the RPC calls and provides a friendly interface for Ruby clients.}
   spec.homepage      = 'https://github.com/spokesoftware/limeade'
   spec.license       = 'MIT'
 
@@ -35,6 +35,9 @@ Gem::Specification.new do |spec|
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
+
+  spec.add_runtime_dependency 'faraday'
+  spec.add_runtime_dependency 'multi_json'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'rake', '~> 10.0'

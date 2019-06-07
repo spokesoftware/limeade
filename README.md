@@ -59,6 +59,31 @@ When you are done accessing the API, it is polite to disconnect.
 ```ruby
 client.disconnect
 ```
+
+### Retry Mechanism
+
+Not every network call goes as planned. Limeade uses the underlying Faraday gem for handling the
+transport. Faraday has a retry mechanism,
+[Faraday::Request::Retry](https://www.rubydoc.info/gems/faraday/0.9.2/Faraday/Request/Retry). Its
+behavior is configurable via
+[options](https://www.rubydoc.info/gems/faraday/0.9.2/Faraday/Request/Retry:initialize) offering a
+high degree of control. These same options may be passed when instantiating `Limeade::Client`.
+
+```ruby
+client = Limeade::Client.new(api_uri, username, password, max: 5, interval: 1.5)
+```
+
+View the `Limeade::Client` documentation for details.
+
+### Logging
+
+The gem defines a logger for its own use. Access it via `Limeade.logger`. Change logging
+level like so `Limeade.logger.level = Logger::WARN`
+
+You can substitute your own logger to consolidate logging throughout your app:
+```ruby
+Limeade.logger = my_apps_logger
+```
  
 ## Development
 

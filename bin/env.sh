@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # The spec suite connects to the LimeSurvey RemoteControl API. If you intend to run the
-# specs, update this script with values specific to your situation. Then run this script
+# specs, update this script with values specific to your situation. Then source this script
 # to set up your environment prior to running the specs.
 # Note that the specs test accessing a survey by id. Kindly provide that id below. If
 # necessary, create a dummy survey for this purpose. It only has to exist and be activated.

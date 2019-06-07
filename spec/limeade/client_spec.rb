@@ -3,10 +3,10 @@ require 'spec_helper'
 RSpec.describe Limeade::Client do
 
   let(:instance) { described_class.new(endpoint, username, password) }
-  let(:endpoint) { ENV['LIMESURVEY_ENDPOINT'] || raise('Provide LimeSurvey account info in bin/env.sh') }
-  let(:username) { ENV['LIMESURVEY_ACCOUNT'] || raise('Provide LimeSurvey account info in bin/env.sh') }
-  let(:password) { ENV['LIMESURVEY_PASSWORD'] || raise('Provide LimeSurvey account info in bin/env.sh') }
-  let(:survey_id) { ENV['LIMESURVEY_SURVEY_ID'] || raise('Provide LimeSurvey account info in bin/env.sh') }
+  let(:endpoint) { ENV['LIMESURVEY_ENDPOINT'] || raise('Set up environment variables. See README file Development section.') }
+  let(:username) { ENV['LIMESURVEY_ACCOUNT'] || raise('Set up environment variables. See README file Development section.') }
+  let(:password) { ENV['LIMESURVEY_PASSWORD'] || raise('Set up environment variables. See README file Development section.') }
+  let(:survey_id) { ENV['LIMESURVEY_SURVEY_ID'] || raise('Set up environment variables. See README file Development section.') }
 
   describe 'new' do
     subject { described_class.new(endpoint, username, password) }

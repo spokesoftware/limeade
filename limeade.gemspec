@@ -1,4 +1,3 @@
-
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'limeade/version'
@@ -20,6 +19,8 @@ Gem::Specification.new do |spec|
     spec.metadata['allowed_push_host'] = 'https://rubygems.org'
 
     spec.metadata['homepage_uri'] = spec.homepage
+    spec.metadata['documentation_uri'] = "https://www.rubydoc.info/gems/limeade/#{spec.version}"
+    spec.metadata['bug_tracker_uri'] = 'https://github.com/spokesoftware/limeade/issues'
     spec.metadata['source_code_uri'] = 'https://github.com/spokesoftware/limeade'
     spec.metadata['changelog_uri'] = 'https://github.com/spokesoftware/limeade/releases'
   else

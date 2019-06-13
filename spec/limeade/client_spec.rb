@@ -75,6 +75,7 @@ RSpec.describe Limeade::Client do
 
     context 'with an unknown survey' do
       let(:survey_id) { 1 }
+      let(:field_name) { nil }
 
       it 'returns nil' do
         expect(subject).to be_nil

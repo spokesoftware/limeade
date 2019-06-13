@@ -42,7 +42,10 @@ require 'limeade'
 ```
 
 Instantiate a client and start invoking API methods on it. The API methods are documented
- [here](https://api.limesurvey.org/classes/remotecontrol_handle.html).
+ [here](https://api.limesurvey.org/classes/remotecontrol_handle.html). Do not specify the
+ `$sSessionKey`, as it is added as the first argument automatically. (Recall that the session is
+ managed for you transparently.)
+ 
 
 ```ruby
 client = Limeade::Client.new(api_uri, username, password)

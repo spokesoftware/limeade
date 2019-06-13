@@ -1,10 +1,8 @@
 require 'limeade/methods'
 
 module Limeade
-
   # Client for accessing the LimeSurvey RemoteControl API from Ruby.
   class Client
-
     #
     # Instantiate a client and setup a connection to the LimeSurvey RemoteControl API.
     # Passes configuration for the Faraday::Request::Retry mechanism.
@@ -100,7 +98,7 @@ module Limeade
     def process_request(method_name, *arguments)
       raise DisconnectedError unless connected?
       result = @json_rpc.invoke(method_name, @session_key, *arguments)
-      if result.is_a? Hash and result['status']
+      if result.is_a?(Hash) && result['status']
         case result['status']
         when 'OK'
           true
@@ -155,5 +153,4 @@ module Limeade
 
   # Private exception raised only in the context of #process_request.
   class NoSessionError < Error; end
-
 end

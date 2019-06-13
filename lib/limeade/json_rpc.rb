@@ -1,14 +1,14 @@
+# frozen_string_literal: true
+
 require 'faraday'
 require 'multi_json'
 
 module Limeade
-
   # An implementation of JSON RPC version 1. This is inspired by jsonrpc-client, which implements
   # version 2 of the spec. This implementation adds retry capability via Faraday::Request::Retry.
 
   class JSON_RPC
-
-    JSON_RPC_VERSION = '1.0'.freeze
+    JSON_RPC_VERSION = '1.0'
 
     #
     # Instantiate a client and setup a connection to the endpoint.
@@ -69,7 +69,7 @@ module Limeade
 
     private
 
-    STANDARD_HEADERS = {content_type: 'application/json'}.freeze
+    STANDARD_HEADERS = { content_type: 'application/json' }.freeze
 
     def connection
       @connection ||= ::Faraday.new do |connection|
@@ -84,6 +84,7 @@ module Limeade
       payload = payload_from(response)
       verify_payload(payload, request_id)
       raise ServerError.new(payload['error']['code'], payload['error']['message']) if payload['error']
+
       payload['result']
     end
 
@@ -97,30 +98,29 @@ module Limeade
     def verify_payload(payload, request_id)
       Limeade.logger.debug "verify_payload: #{payload.inspect}"
       raise(InvalidResponseError, 'Response body is not a Hash') unless payload.is_a?(::Hash)
-      raise(InvalidResponseError, 'Response body is missing the id') unless payload.has_key?('id')
-      raise(InvalidResponseError, "Response id (#{payload['id']}) does not match request id (#{request_id})") unless (payload['id'] == request_id)
-      raise(InvalidResponseError, 'Response body must have a result and an error') unless (payload.has_key?('error') && payload.has_key?('result'))
+      raise(InvalidResponseError, 'Response body is missing the id') unless payload.key?('id')
+      raise(InvalidResponseError, "Response id (#{payload['id']}) does not match request id (#{request_id})") unless payload['id'] == request_id
+      raise(InvalidResponseError, 'Response body must have a result and an error') unless payload.key?('error') && payload.key?('result')
 
       if payload['error']
         error = payload['error']
         raise(InvalidResponseError, 'Response error is not a Hash') unless error.is_a?(::Hash)
-        raise(InvalidResponseError, 'Response error is missing the code') unless error.has_key?('code')
+        raise(InvalidResponseError, 'Response error is missing the code') unless error.key?('code')
         raise(InvalidResponseError, 'Response error code is not a number') unless error['code'].is_a?(::Integer)
-        raise(InvalidResponseError, 'Response error is missing the message') unless error.has_key?('message')
+        raise(InvalidResponseError, 'Response error is missing the message') unless error.key?('message')
         raise(InvalidResponseError, 'Response error message is not a string') unless error['message'].is_a?(::String)
       end
     end
 
     def payload_from(response)
       ::MultiJson.decode(response.body)
-    rescue => parsing_error
+    rescue StandardError => e
       Limeade.logger.info "Failed to parse JSON from:\n#{response.body}"
-      raise InvalidResponseError, parsing_error.message
+      raise InvalidResponseError, e.message
     end
 
     def make_id
       rand(10**12)
     end
-
   end
 end

@@ -1,5 +1,6 @@
-module Limeade
+# frozen_string_literal: true
 
+module Limeade
   class Error < StandardError; end
 
   class InvalidResponseError < Error; end
@@ -27,5 +28,4 @@ module Limeade
       super("LimeSurvey API '#{method}' returned a failure status: #{status}")
     end
   end
-
 end

@@ -108,6 +108,8 @@ module Limeade
           []
         when 'No Tokens found'
           []
+        when 'No survey participants table'
+          false
         when /(left to send)|(No candidate tokens)$/
           result
         when /Invalid surveyid$/i

@@ -115,8 +115,8 @@ RSpec.describe Limeade::JSON_RPC do
 
     context 'with valid JSON in the response body' do
       let(:response) { Faraday::Response.new(body: '{ foo: "bar" }') }
-      it 'raises InvalidJSON with descriptive message' do
-        expect{subject}.to raise_error(Limeade::InvalidJSONError, /unexpected token/)
+      it 'raises InvalidResponseError with descriptive message' do
+        expect{subject}.to raise_error(Limeade::InvalidResponseError, /unexpected token/)
       end
     end
 

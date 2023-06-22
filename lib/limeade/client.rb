@@ -1,5 +1,3 @@
-require 'limeade/methods'
-
 module Limeade
   # Client for accessing the LimeSurvey RemoteControl API from Ruby.
   class Client
@@ -65,25 +63,73 @@ module Limeade
       end
     end
 
-    # Handle LimeSurvey RemoteControl API calls invoked on the client by invoking them on the endpoint.
-    # @param method [Symbol] the method invoked
-    # @param arguments [Array] the arguments to the method
+    # Define a LimeSurvey RemoteControl API method call.
     #
-    # @raise [ServerError] The API endpoint server is having issues. An error code and message are included.
-    # @raise [InvalidResponseError] The API endpoint is returning malformed JSON RPC responses. A descriptive message
+    # @param ruby_method [Symbol] the name of the ruby method to define
+    # @param rpc_method [Symbol, String] the name of the JSON RPC method to call
+    # @!macro [attach] define_api_method
+    #   @method $1
+    #   Invoke the +${-1}+ JSON RPC method on the given endpoint.
     #
-    # @return [Object] the result of invoking the method on the endpoint
-    def method_missing(method, *arguments)
-      if API_METHODS.include? method
-        process_request(method, *arguments)
-      else
-        super
+    #   @see https://api.limesurvey.org/classes/remotecontrol_handle.html#method_${-1}
+    #   @param [variable] *arguments see LimeSurvey documentation
+    #   @raise [ServerError] The API endpoint server is having issues. An error code and message are included.
+    #   @raise [InvalidResponseError] The API endpoint is returning malformed JSON RPC responses. A descriptive message
+    #   @return [Object] the result of invoking the method on the endpoint
+    def self.define_api_method(ruby_method, rpc_method = ruby_method)
+      define_method(ruby_method) do |*arguments|
+        process_request(rpc_method, *arguments)
       end
     end
 
-    def respond_to_missing?(method_name, include_private = false)
-      API_METHODS.include?(method_name) || super
-    end
+    define_api_method :activate_survey
+    define_api_method :activate_tokens
+    define_api_method :add_group
+    define_api_method :add_language
+    define_api_method :add_participants
+    define_api_method :add_response
+    define_api_method :add_survey
+    define_api_method :copy_survey
+    define_api_method :cpd_importParticipants
+    define_api_method :delete_group
+    define_api_method :delete_language
+    define_api_method :delete_participants
+    define_api_method :delete_question
+    define_api_method :delete_survey
+    define_api_method :export_responses
+    define_api_method :export_responses_by_token
+    define_api_method :export_statistics
+    define_api_method :export_timeline
+    define_api_method :get_group_properties
+    define_api_method :get_language_properties
+    define_api_method :get_participant_properties
+    define_api_method :get_question_properties
+    define_api_method :get_response_ids
+    define_api_method :get_session_key
+    define_api_method :get_site_settings
+    define_api_method :get_summary
+    define_api_method :get_survey_properties
+    define_api_method :get_uploaded_files
+    define_api_method :import_group
+    define_api_method :import_question
+    define_api_method :import_survey
+    define_api_method :invite_participants
+    define_api_method :list_groups
+    define_api_method :list_participants
+    define_api_method :list_questions
+    define_api_method :list_surveys
+    define_api_method :list_users
+    define_api_method :mail_registered_participants
+    define_api_method :release_session_key
+    define_api_method :remind_participants
+    define_api_method :set_group_properties
+    define_api_method :set_language_properties
+    define_api_method :set_participant_properties
+    define_api_method :set_question_properties
+    define_api_method :set_quota_properties
+    define_api_method :set_survey_properties
+    define_api_method :update_response
+    define_api_method :upload_file
 
     private
 
